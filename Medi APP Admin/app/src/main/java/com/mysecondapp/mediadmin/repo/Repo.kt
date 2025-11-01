@@ -82,6 +82,9 @@ class Repo @Inject constructor(private val ApiInstance: ApiBuilder) {
         emit(Results.Loading)
         try {
             val UserApproval=ApiInstance.Api.ApproveUser(UserId = Uid, ApproveStatus =  ApproveStatus)
+            if (UserApproval.isSuccessful){
+                ListAlluser()
+            }
             emit(Results.Success(data = UserApproval))
         }catch (e : Exception){
             emit(Results.Error(e.message.toString()))
@@ -92,6 +95,9 @@ class Repo @Inject constructor(private val ApiInstance: ApiBuilder) {
         emit(Results.Loading)
         try {
             val updatestatus = ApiInstance.Api.updateUser(UserId = Uid, BlockStatus = Block_Status)
+            if (updatestatus.isSuccessful){
+                ListAlluser()
+            }
             emit(Results.Success(data = updatestatus))
         }catch (e : Exception){
             emit(Results.Error(Errormsg = e.message.toString()))
