@@ -1,5 +1,6 @@
 package com.mysecondapp.mediadmin.screens
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
@@ -60,6 +61,8 @@ fun ShowSingleUserScreen(
     viewModel: MyViewModel = hiltViewModel(),
 ) {
 
+    val toastcontext = LocalContext.current
+
     val systemUiController = rememberSystemUiController()
     val darktheme = isSystemInDarkTheme()
 
@@ -67,8 +70,22 @@ fun ShowSingleUserScreen(
         viewModel.showUserDetails(uId)
     }
 
-    val toastcontext = LocalContext.current
     val deleteState = viewModel.DeleteUserState.collectAsState()
+
+    LaunchedEffect(deleteState.value) {
+        val state = deleteState.value
+        if (state.data != null && state.loading == false){
+            Toast.makeText(toastcontext, "User Deleted", Toast.LENGTH_SHORT).show()
+            navController.popBackStack()
+
+
+        }else if (state.error != null){
+            Log.d("Local Tag", state.error)
+            Toast.makeText(toastcontext, "Error Arises : ${state.error}", Toast.LENGTH_SHORT)
+                .show()
+        }
+    }
+
 
     val userState = viewModel.SingleUserState.collectAsState()
 
@@ -234,10 +251,7 @@ fun ShowSingleUserScreen(
                             onClick = {
                                 if(isApproved.value){
                                     viewModel.deleteUser(UID = uId)
-                                    navController.previousBackStackEntry?.savedStateHandle?.set("refresh", true)
-                                    navController.popBackStack()
-                                    Toast.makeText(toastcontext, "User Deleted", Toast.LENGTH_SHORT)
-                                        .show()
+
                                 }else{
                                     viewModel.ApproveUser(UserId = uId!!, ApproveStatus = "1")
                                     isApproved.value = true
@@ -263,8 +277,6 @@ fun ShowSingleUserScreen(
                             Spacer(modifier = Modifier.size(ButtonDefaults.IconSize))
                             Text(text = if (isApproved.value){"Delete"}else{"Approve"})
                         }
-
-
 
                     }
                 }
