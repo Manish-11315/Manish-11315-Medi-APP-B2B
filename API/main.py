@@ -80,6 +80,7 @@ def changeuseracceptance():
 		Is_approved_bool = str_to_bool(Is_approved_str)
 		userdata = checkuser(uid)
 		if(userdata == 1):
+			
 			changeacceptancestatus(userid = uid, set_status = Is_approved_bool)
 			return jsonify({"Message":"Updated Successfully", "status" : 200})
 		else:
