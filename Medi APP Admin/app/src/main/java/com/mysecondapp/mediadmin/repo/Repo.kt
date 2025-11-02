@@ -57,7 +57,11 @@ class Repo @Inject constructor(private val ApiInstance: ApiBuilder) {
         emit(Results.Loading)
         try {
             val data = ApiInstance.Api.GetSpecificUser(uid)
-            emit(Results.Success(data))
+            if (data.isSuccessful) {
+                emit(Results.Success(data))
+            }else{
+                emit(Results.Error(Errormsg = "Api Error : ${data.message()}"))
+            }
         }catch (e : Exception){
             emit(Results.Error(e.message.toString()))
         }
@@ -65,6 +69,17 @@ class Repo @Inject constructor(private val ApiInstance: ApiBuilder) {
 
     suspend fun DeleteSpecificUser(Uid : String) : Flow<Results<Response<UserDataModel>>> = flow {
         emit(Results.Loading)
+
+        val currentlist = _userState.value.data?.toMutableList() ?: mutableListOf()
+        val userToremove = currentlist.find { it.user_id == Uid }
+
+        if (userToremove != null){
+            currentlist.remove(userToremove)
+            val newdatamode = UserDataModel()
+            newdatamode.addAll(currentlist)
+            _userState.emit(apistate(data = newdatamode))
+        }
+
         try {
             val data = ApiInstance.Api.deleteSpecificUser(Uid)
             if (data.isSuccessful){
