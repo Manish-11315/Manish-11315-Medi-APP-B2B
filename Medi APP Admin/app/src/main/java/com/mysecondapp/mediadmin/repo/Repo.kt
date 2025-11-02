@@ -68,11 +68,11 @@ class Repo @Inject constructor(private val ApiInstance: ApiBuilder) {
         try {
             val data = ApiInstance.Api.deleteSpecificUser(Uid)
             if (data.isSuccessful){
-                _userState.emit(apistate(loading = true))
                 ListAlluser()
-                _userState.emit(apistate(loading = false))
+                emit(Results.Success(data))
+            }else{
+                emit(Results.Error("Api Error : ${data.message()}"))
             }
-            emit(Results.Success(data))
         }catch (e : Exception){
             emit(Results.Error(e.message.toString()))
         }

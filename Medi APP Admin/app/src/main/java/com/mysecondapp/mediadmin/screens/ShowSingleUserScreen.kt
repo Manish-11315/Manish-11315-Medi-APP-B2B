@@ -2,6 +2,7 @@ package com.mysecondapp.mediadmin.screens
 
 import android.util.Log
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -164,8 +165,17 @@ fun ShowSingleUserScreen(
                     .fillMaxSize()
                     .padding(20.dp)
             ) {
-
-                if (userState.value.loading == true) {
+                val isuserdeleting = deleteState.value.loading
+                val userdataloading = userState.value.loading == true
+                if (isuserdeleting == true){
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier.fillMaxSize()
+                    ){
+                        CircularWavyProgressIndicator(color = colorResource(id = R.color.purple_200))
+                    }
+                }
+                if ( userdataloading == true && isuserdeleting != true) {
                     Box(
                         contentAlignment = Alignment.Center,
                         modifier = Modifier.fillMaxSize()
@@ -248,6 +258,7 @@ fun ShowSingleUserScreen(
 
                         Button(
                             modifier = Modifier.fillMaxWidth(),
+                            enabled = isuserdeleting != true,
                             onClick = {
                                 if(isApproved.value){
                                     viewModel.deleteUser(UID = uId)
