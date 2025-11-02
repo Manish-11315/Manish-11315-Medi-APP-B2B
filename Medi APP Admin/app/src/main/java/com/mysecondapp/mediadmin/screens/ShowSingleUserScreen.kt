@@ -73,18 +73,20 @@ fun ShowSingleUserScreen(
 
     val deleteState = viewModel.DeleteUserState.collectAsState()
 
-    LaunchedEffect(deleteState.value) {
-        val state = deleteState.value
-        if (state.data != null && state.loading == false){
-            Toast.makeText(toastcontext, "User Deleted", Toast.LENGTH_SHORT).show()
-            navController.popBackStack()
-
-        }else if (state.error != null){
-            Log.d("Local Tag", state.error)
-            Toast.makeText(toastcontext, "Error Arises : ${state.error}", Toast.LENGTH_SHORT)
-                .show()
-        }
-    }
+//    LaunchedEffect(deleteState.value) {
+//        val state = deleteState.value
+//
+//        if (state.data != null && state.loading == false){
+//            Toast.makeText(toastcontext, "User Deleted", Toast.LENGTH_SHORT).show()
+//            navController.popBackStack()
+//
+//        }/*else if (state.error != null){
+//            Log.d("Local Tag", state.error)
+//            Toast.makeText(toastcontext, "Error Arises : ${state.error}", Toast.LENGTH_SHORT)
+//                .show()
+//        }*/
+//
+//    }
 
 
     val userState = viewModel.SingleUserState.collectAsState()
@@ -261,6 +263,8 @@ fun ShowSingleUserScreen(
                             onClick = {
                                 if(isApproved.value){
                                     viewModel.deleteUser(UID = uId)
+                                    navController.popBackStack()
+
 
                                 }else{
                                     viewModel.ApproveUser(UserId = uId!!, ApproveStatus = "1")
