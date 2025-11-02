@@ -99,8 +99,8 @@ class Repo @Inject constructor(private val ApiInstance: ApiBuilder) {
             val updatestatus = ApiInstance.Api.updateUser(UserId = Uid, BlockStatus = Block_Status)
             if (updatestatus.isSuccessful){
                 ListAlluser()
+                emit(Results.Success(data = updatestatus))
             }
-            emit(Results.Success(data = updatestatus))
         }catch (e : Exception){
             emit(Results.Error(Errormsg = e.message.toString()))
         }
