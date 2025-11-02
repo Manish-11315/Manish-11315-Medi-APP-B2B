@@ -86,8 +86,8 @@ class Repo @Inject constructor(private val ApiInstance: ApiBuilder) {
             val UserApproval=ApiInstance.Api.ApproveUser(UserId = Uid, ApproveStatus =  ApproveStatus)
             if (UserApproval.isSuccessful){
                 ListAlluser()
+                emit(Results.Success(data = UserApproval))
             }
-            emit(Results.Success(data = UserApproval))
         }catch (e : Exception){
             emit(Results.Error(e.message.toString()))
         }
