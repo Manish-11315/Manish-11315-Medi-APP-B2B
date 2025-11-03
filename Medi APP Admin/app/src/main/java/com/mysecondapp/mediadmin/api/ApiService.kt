@@ -1,5 +1,6 @@
 package com.mysecondapp.mediadmin.api
 
+import com.mysecondapp.mediadmin.model.AddProductDataModel
 import com.mysecondapp.mediadmin.model.UserDataModel
 import com.mysecondapp.mediadmin.model.UserDataModelItem
 import com.mysecondapp.mediadmin.model.UserOperationModel
@@ -54,5 +55,14 @@ interface ApiService {
         @Field("user_id") UserId: String?,
         @Field("block_status") BlockStatus: String?
     ): Response<UserOperationModel>
+
+    @FormUrlEncoded
+    @POST("addproduct")
+    suspend fun AddProduct(
+        @Field("name") Name : String?,
+        @Field("price") Price : Float?,
+        @Field("category") Category : String?,
+        @Field("stock") Stock : Int?
+    ) : Response<AddProductDataModel>
 
 }

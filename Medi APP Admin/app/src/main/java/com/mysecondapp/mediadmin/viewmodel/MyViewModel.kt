@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mysecondapp.mediadmin.common.Results
+import com.mysecondapp.mediadmin.model.AddProductDataModel
 import com.mysecondapp.mediadmin.model.UserDataModel
 import com.mysecondapp.mediadmin.model.UserDataModelItem
 import com.mysecondapp.mediadmin.model.UserOperationModel
@@ -40,6 +41,9 @@ class MyViewModel @Inject constructor(private val RepoObj : Repo) : ViewModel ()
 
     val _listUsers = MutableStateFlow(apistate())
     val listUsers = _listUsers.asStateFlow()
+
+    private val _productstate = MutableStateFlow(ManageProductState())
+    val ProductStateHolder = _productstate.asStateFlow()
 
 
     fun showUserDetails(UID : String?){
@@ -124,6 +128,29 @@ class MyViewModel @Inject constructor(private val RepoObj : Repo) : ViewModel ()
         }
     }
 
+    fun addProduct(
+        name : String?,
+        price : Float,
+        category : String,
+        stock : Int
+    ){
+        viewModelScope.launch(Dispatchers.IO) {
+            RepoObj.addProduct(name = name!!, price = price, category = category, stock = stock).collect { it->
+                when(it){
+                    is Results.Error -> {
+                        _productstate.value = ManageProductState(error = it.Errormsg, loading = false)
+                    }
+                    is Results.Loading -> {
+                        _productstate.value = ManageProductState(loading = true)
+                    }
+                    is Results.Success -> {
+                        _productstate.value = ManageProductState(data = it.data!!.body(), loading = false)
+                    }
+                }
+            }
+        }
+    }
+
 }
 data class apistate(
     val loading : Boolean? = false,
@@ -149,4 +176,9 @@ data class ManageUserState(
     val loading : Boolean? = false,
     val error: String? = null,
     val data : UserOperationModel? = null
+)
+data class ManageProductState(
+    val loading : Boolean? = false,
+    val error: String? = null,
+    val data : AddProductDataModel? = null
 )

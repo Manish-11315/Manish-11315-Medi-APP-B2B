@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import com.mysecondapp.mediadmin.screens.Addproduct
 import com.mysecondapp.mediadmin.screens.ShowAllUserScreen
 import com.mysecondapp.mediadmin.screens.ShowSingleUserScreen
 
@@ -14,7 +15,7 @@ fun App(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = Routes.AllUserScreenRoute,
+        startDestination = Routes.AddproductRoute,
     ) {
         composable<Routes.AllUserScreenRoute> { it ->
             ShowAllUserScreen(navController = navController)
@@ -22,6 +23,9 @@ fun App(modifier: Modifier = Modifier) {
         composable<Routes.UserDataScreenRoute> { backStackEntry ->
             val args = backStackEntry.toRoute<Routes.UserDataScreenRoute>()
             ShowSingleUserScreen(navController = navController, uId = args.userId)
+        }
+        composable<Routes.AddproductRoute>{
+            Addproduct(navController = navController)
         }
 
     }

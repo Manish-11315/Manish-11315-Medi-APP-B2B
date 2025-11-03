@@ -2,6 +2,7 @@ package com.mysecondapp.mediadmin.repo
 
 import com.mysecondapp.mediadmin.api.ApiBuilder
 import com.mysecondapp.mediadmin.common.Results
+import com.mysecondapp.mediadmin.model.AddProductDataModel
 import com.mysecondapp.mediadmin.model.UserDataModel
 import com.mysecondapp.mediadmin.model.UserDataModelItem
 import com.mysecondapp.mediadmin.model.UserOperationModel
@@ -118,6 +119,21 @@ class Repo @Inject constructor(private val ApiInstance: ApiBuilder) {
             }
         }catch (e : Exception){
             emit(Results.Error(Errormsg = e.message.toString()))
+        }
+    }
+
+    suspend fun addProduct(
+        name : String,
+        price : Float,
+        category : String,
+        stock : Int
+    ) : Flow<Results<Response<AddProductDataModel>>> = flow {
+        emit(Results.Loading)
+        try {
+            val response = ApiInstance.Api.AddProduct(Name = name, Price = price, Category = category, Stock = stock)
+            emit(Results.Success(data = response))
+        }catch (e : Error){
+            emit(Results.Error(e.message.toString()))
         }
     }
 }

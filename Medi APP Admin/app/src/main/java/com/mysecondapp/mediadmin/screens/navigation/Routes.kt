@@ -13,4 +13,7 @@ sealed class Routes {
         val userId : String?
     )
 
+    @Serializable
+    object AddproductRoute
+
 }
