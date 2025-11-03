@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.mysecondapp.mediadmin.screens.Addproduct
+import com.mysecondapp.mediadmin.screens.ShowAllProducts
 import com.mysecondapp.mediadmin.screens.ShowAllUserScreen
 import com.mysecondapp.mediadmin.screens.ShowSingleUserScreen
 
@@ -26,6 +27,9 @@ fun App(modifier: Modifier = Modifier) {
         }
         composable<Routes.AddproductRoute>{
             Addproduct(navController = navController)
+        }
+        composable<Routes.GetProductsRoute> {
+            ShowAllProducts(navController = navController)
         }
 
     }
