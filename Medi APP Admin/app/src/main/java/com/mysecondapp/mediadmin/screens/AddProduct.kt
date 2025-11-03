@@ -70,102 +70,117 @@ fun Addproduct(viewModel: MyViewModel = hiltViewModel(), navController: NavContr
                 Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()){
                     Text(text = "An Error Occurred : ${addproductstate.value.error.toString()}")
                 }
-            }
+            }else {
 
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .imePadding()
-                    .imeNestedScroll()
-                    .verticalScroll(scrollState),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-
-                Text(
-                    text = "ADD Product ",
-                    fontFamily = poppins,
-                    fontWeight = FontWeight.Bold
-                )
-                Spacer(modifier = Modifier.padding(10.dp))
-                OutlinedTextField(
-                    value = name.value,
-                    onValueChange = {
-                        name.value = it
-                    },
-                    label = {
-                        Text(text = "Enter the Medicine Name", fontFamily = poppins)
-                    },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                    singleLine = true,
-                )
-                Spacer(modifier = Modifier.padding(10.dp))
-
-                OutlinedTextField(
-                    value = category.value,
-                    onValueChange = {
-                        category.value = it
-                    },
-                    label = {
-                        Text(text = "Enter the Medicine category")
-                    },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                    singleLine = true
-                )
-                Spacer(modifier = Modifier.padding(10.dp))
-
-                OutlinedTextField(
-                    value = price.value,
-                    onValueChange = {
-                        if (it.length <= 6){
-                            price.value = it
-                        }
-                    },
-                    label = {
-                        Text(text = "Enter the Price")
-                    },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    singleLine = true
-                )
-                Spacer(modifier = Modifier.padding(10.dp))
-
-                OutlinedTextField(
-                    value = stock.value,
-                    onValueChange = {
-                        if (it.length <= 5){
-                            stock.value = it
-                        }
-                    },
-                    label = {
-                        Text(text = "Enter the Stock")
-                    },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    singleLine = true
-                )
-
-                Spacer(modifier = Modifier.padding(20.dp))
-                Button(
-                    onClick = {
-                        if (!name.value.isNullOrBlank() &&
-                            !category.value.isNullOrBlank()&&
-                            !price.value.isNullOrBlank()&&
-                            !stock.value.isNullOrBlank()){
-
-                            val stockint : Int = stock.value.toInt()
-                            val pricefloat : Float = price.value.toFloat()
-                            viewModel.addProduct(name = name.value, category = category.value, price = pricefloat, stock = stockint)
-                            Toast.makeText(toastContext, "Successfully Added Product stock ",Toast.LENGTH_SHORT).show()
-
-                        }else{
-                            Toast.makeText(toastContext, "Please Fill all the details", Toast.LENGTH_SHORT).show()
-
-                        }
-                    }
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .imePadding()
+                        .imeNestedScroll()
+                        .verticalScroll(scrollState),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
                 ) {
-                    Text("Add Product")
+
+                    Text(
+                        text = "ADD Product ",
+                        fontFamily = poppins,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Spacer(modifier = Modifier.padding(10.dp))
+                    OutlinedTextField(
+                        value = name.value,
+                        onValueChange = {
+                            name.value = it
+                        },
+                        label = {
+                            Text(text = "Enter the Medicine Name", fontFamily = poppins)
+                        },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                        singleLine = true,
+                    )
+                    Spacer(modifier = Modifier.padding(10.dp))
+
+                    OutlinedTextField(
+                        value = category.value,
+                        onValueChange = {
+                            category.value = it
+                        },
+                        label = {
+                            Text(text = "Enter the Medicine category")
+                        },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                        singleLine = true
+                    )
+                    Spacer(modifier = Modifier.padding(10.dp))
+
+                    OutlinedTextField(
+                        value = price.value,
+                        onValueChange = {
+                            if (it.length <= 6) {
+                                price.value = it
+                            }
+                        },
+                        label = {
+                            Text(text = "Enter the Price")
+                        },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        singleLine = true
+                    )
+                    Spacer(modifier = Modifier.padding(10.dp))
+
+                    OutlinedTextField(
+                        value = stock.value,
+                        onValueChange = {
+                            if (it.length <= 5) {
+                                stock.value = it
+                            }
+                        },
+                        label = {
+                            Text(text = "Enter the Stock")
+                        },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        singleLine = true
+                    )
+
+                    Spacer(modifier = Modifier.padding(20.dp))
+                    Button(
+                        onClick = {
+                            if (!name.value.isNullOrBlank() &&
+                                !category.value.isNullOrBlank() &&
+                                !price.value.isNullOrBlank() &&
+                                !stock.value.isNullOrBlank()
+                            ) {
+
+                                val stockint: Int = stock.value.toInt()
+                                val pricefloat: Float = price.value.toFloat()
+                                viewModel.addProduct(
+                                    name = name.value,
+                                    category = category.value,
+                                    price = pricefloat,
+                                    stock = stockint
+                                )
+                                Toast.makeText(
+                                    toastContext,
+                                    "Successfully Added Product stock ",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+
+                            } else {
+                                Toast.makeText(
+                                    toastContext,
+                                    "Please Fill all the details",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+
+                            }
+                        }
+                    ) {
+                        Text("Add Product")
+
+                    }
 
                 }
-
             }
         }
     }
