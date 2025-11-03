@@ -1,6 +1,7 @@
 package com.mysecondapp.mediadmin.api
 
 import com.mysecondapp.mediadmin.model.AddProductDataModel
+import com.mysecondapp.mediadmin.model.ProductDataModel
 import com.mysecondapp.mediadmin.model.UserDataModel
 import com.mysecondapp.mediadmin.model.UserDataModelItem
 import com.mysecondapp.mediadmin.model.UserOperationModel
@@ -64,5 +65,8 @@ interface ApiService {
         @Field("category") Category : String?,
         @Field("stock") Stock : Int?
     ) : Response<AddProductDataModel>
+
+    @GET("getallproducts")
+    suspend fun getAllProducts() : Response<ProductDataModel>
 
 }

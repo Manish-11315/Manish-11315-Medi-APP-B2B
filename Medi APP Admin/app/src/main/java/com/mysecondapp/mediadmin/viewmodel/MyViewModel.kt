@@ -5,8 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mysecondapp.mediadmin.common.Results
 import com.mysecondapp.mediadmin.model.AddProductDataModel
+import com.mysecondapp.mediadmin.model.ProductDataModel
 import com.mysecondapp.mediadmin.model.UserDataModel
 import com.mysecondapp.mediadmin.model.UserDataModelItem
 import com.mysecondapp.mediadmin.model.UserOperationModel
@@ -44,6 +46,9 @@ class MyViewModel @Inject constructor(private val RepoObj : Repo) : ViewModel ()
 
     private val _productstate = MutableStateFlow(ManageProductState())
     val ProductStateHolder = _productstate.asStateFlow()
+
+    private val _ProductGetState = MutableStateFlow(GetAllProductState())
+    val GetProductStateHolder = _ProductGetState.asStateFlow()
 
 
     fun showUserDetails(UID : String?){
@@ -151,6 +156,24 @@ class MyViewModel @Inject constructor(private val RepoObj : Repo) : ViewModel ()
         }
     }
 
+    fun getallProducts(){
+        viewModelScope.launch (Dispatchers.IO) {
+            RepoObj.getAllProducts().collect {
+                when(it){
+                    is Results.Loading -> {
+                        _ProductGetState.value = GetAllProductState(loading = true)
+                    }
+                    is Results.Error -> {
+                        _ProductGetState.value = GetAllProductState(loading = false, error = it.Errormsg)
+                    }
+                    is Results.Success -> {
+                        _ProductGetState.value = GetAllProductState(loading = false, data = it.data.body())
+                    }
+                }
+            }
+        }
+    }
+
 }
 data class apistate(
     val loading : Boolean? = false,
@@ -181,4 +204,9 @@ data class ManageProductState(
     val loading : Boolean? = false,
     val error: String? = null,
     val data : AddProductDataModel? = null
+)
+data class GetAllProductState(
+    val loading: Boolean? = false,
+    val error: String? = null,
+    val data: ProductDataModel? = null
 )
