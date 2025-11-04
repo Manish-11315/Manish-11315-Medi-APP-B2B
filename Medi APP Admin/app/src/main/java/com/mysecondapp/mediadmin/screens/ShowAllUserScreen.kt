@@ -52,7 +52,7 @@ import kotlinx.serialization.descriptors.StructureKind
 @OptIn(ExperimentalMaterial3ExpressiveApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun ShowAllUserScreen(viewModel: MyViewModel = hiltViewModel(),navController: NavController) {
-    val data = viewModel.ListUsers.collectAsState(initial = apistate(loading = true))
+    val data = viewModel.ListUsers.collectAsState(apistate(loading = true))
 
     val systemUiController = rememberSystemUiController()
     val darktheme = isSystemInDarkTheme()

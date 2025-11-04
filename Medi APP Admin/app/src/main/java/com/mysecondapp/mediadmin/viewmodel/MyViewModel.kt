@@ -50,6 +50,10 @@ class MyViewModel @Inject constructor(private val RepoObj : Repo) : ViewModel ()
     private val _ProductGetState = MutableStateFlow(GetAllProductState())
     val GetProductStateHolder = _ProductGetState.asStateFlow()
 
+    init {
+        getallProducts()
+    }
+
 
     fun showUserDetails(UID : String?){
         if (UID == null) return

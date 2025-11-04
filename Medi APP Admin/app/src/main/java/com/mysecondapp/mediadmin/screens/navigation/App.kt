@@ -16,7 +16,7 @@ fun App(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = Routes.AddproductRoute,
+        startDestination = Routes.GetProductsRoute,
     ) {
         composable<Routes.AllUserScreenRoute> { it ->
             ShowAllUserScreen(navController = navController)

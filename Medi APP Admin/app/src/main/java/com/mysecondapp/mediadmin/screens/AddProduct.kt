@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mysecondapp.mediadmin.R
+import com.mysecondapp.mediadmin.screens.navigation.Routes
 import com.mysecondapp.mediadmin.ui.theme.poppins
 import com.mysecondapp.mediadmin.viewmodel.MyViewModel
 
@@ -165,6 +166,8 @@ fun Addproduct(viewModel: MyViewModel = hiltViewModel(), navController: NavContr
                                     "Successfully Added Product stock ",
                                     Toast.LENGTH_SHORT
                                 ).show()
+
+                                navController.navigate(Routes.GetProductsRoute)
 
                             } else {
                                 Toast.makeText(
