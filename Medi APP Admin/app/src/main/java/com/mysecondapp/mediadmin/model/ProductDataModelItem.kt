@@ -5,6 +5,7 @@ data class ProductDataModelItem(
     val category: String,
     val name: String,
     val price: Double,
+
     val product_id: String,
     val stock: Int
 )
