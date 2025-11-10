@@ -49,6 +49,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.mysecondapp.mediadmin.R
@@ -74,7 +75,7 @@ fun ShowSingleUserScreen(
     val deleteState = viewModel.DeleteUserState.collectAsState()
 
 
-    val userState = viewModel.SingleUserState.collectAsState()
+    val userState = viewModel.SingleUserState.collectAsStateWithLifecycle()
 
     val approveState = viewModel.ApproveUserStateHolder.collectAsState()
 

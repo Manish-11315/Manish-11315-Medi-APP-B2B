@@ -12,6 +12,6 @@ object ApiBuilder {
         baseUrl("https://blacklight121.pythonanywhere.com/").
         addConverterFactory(GsonConverterFactory.create()).
         build().
-        create(ApiService ::class.java)
+        create(ApiService :: class.java)
 
 }
